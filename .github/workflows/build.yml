@@ -1,0 +1,19 @@
+name: Build Poaser
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build
+      - name: Build VST3
+        run: cmake --build build --config Release --target Poaser_VST3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Poaser-Windows-VST3
+          path: build/Poaser_artefacts/Release/VST3/Poaser.vst3
